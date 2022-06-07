@@ -58,11 +58,12 @@ vector<int> match;
 int n;
 vector<char> usedVertices;
 
-vector<int> sortedSet(vector< vector<int> > matrix) {
-    vector<int> sorted;
+vector<int> sortedSet(vector< vector<int> > &matrix) {
+    vector<int> sorted = vector<int>();
+    
     for (int i=0; i<n;i++) {
         int max=matrix[i][0];
-        int maxJ=i=0;
+        int maxJ=0;
         for (int j=1; j<n; j++) {
             if (matrix[i][j]>max) {
                 max=matrix[i][j];
@@ -100,8 +101,9 @@ int main()
     for (int i=0; i<n;i++) {
         for (int j=0; j<n; j++) cin >> matrix[i][j];
     }
-    
-    bipartiteGraph = vector< vector <int> >(n, vector<int>(1));
+
+    bipartiteGraph = matrix;
+    // bipartiteGraph = vector< vector <int> >(n, vector<int>(1));
     
     vector<int> order = sortedSet(matrix);
     
@@ -109,12 +111,17 @@ int main()
     match.assign(n, -1);
     for (int i=0; i<n; i++) {
         // iota(bipartiteGraph[i].begin(), bipartiteGraph[i].end(), 0);
-        bipartiteGraph[i][0] = 0;
+        // bipartiteGraph[i][0] = 0;
         usedVertices.assign(n, false);
         kuhnAlgorithm(order[i]);
     }
     
-    int sum=0;
+    for (int i=0; i<n; i++)
+        if (match[i] != -1)
+            cout << match[i]+1 << " - " << i+1 << endl;
+    cout<<endl;
+    
+    // int sum=0;
     
     // int maxNum;
     // int maxI, maxJ;
@@ -140,7 +147,7 @@ int main()
     //     matrix.erase(matrix.begin()+maxI);
     // }
     
-    cout<< sum << endl;
+    // cout<< sum << endl;
 
     return 0;
 }
